@@ -1,0 +1,20 @@
+{
+    "name": "geekdpt/slamp",
+    "type": "library",
+    "description": "Asynchronous Slack client for PHP, with Web & RTM APIs support",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Morgan Touverey Quilling",
+            "email": "mtouverey@methodinthemadness.eu"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Slamp\\": "src/" },
+        "classmap": ["src/Exception/SlackExceptionsCombined.php"]
+    },
+    "require": {
+        "amphp/artax": "^2.0",
+        "lstrojny/functional-php": "^1.2"
+    }
+}
