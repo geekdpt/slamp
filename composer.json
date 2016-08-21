@@ -3,6 +3,7 @@
     "type": "library",
     "description": "Asynchronous Slack client for PHP, with Web & RTM APIs support",
     "license": "MIT",
+    "keywords": ["amp", "amphp", "slack", "api", "client", "bot", "rtm"],
     "authors": [
         {
             "name": "Morgan Touverey Quilling",
