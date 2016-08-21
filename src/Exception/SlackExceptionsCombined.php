@@ -1153,4 +1153,3 @@ class ProfileSetFailedException extends SlackException
     public $message = 'Failed to set user profile.';
 }
 
-

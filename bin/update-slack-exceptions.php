@@ -16,8 +16,9 @@
  */
 
 # This script reads Slack documentation and extracts documented errors to generate our SlackException classes.
-
 # Now, eat some poor code =)
+
+namespace Slamp;
 
 const eol = PHP_EOL;
 const BASE_URL = 'https://api.slack.com';
