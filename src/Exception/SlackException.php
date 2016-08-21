@@ -19,7 +19,13 @@ class SlackException extends \Exception
 {
     protected $slackCode;
 
-
+    /**
+     * Factory for building the correct SlackException subclass from the error code.
+     *
+     * @param string $slackCode
+     *
+     * @return SlackException Or a subclass of it.
+     */
     final public static function fromSlackCode(string $slackCode) : SlackException
     {
         # We CamelCasify the slack code and check if there's an exception subclass for that.
@@ -30,6 +36,12 @@ class SlackException extends \Exception
         return new $class($slackCode);
     }
 
+    /**
+     * SlackException constructor.
+     * This constructor should not be used directly, use the factory self::fromSlackCode() instead.
+     *
+     * @param string $slackCode
+     */
     public function __construct(string $slackCode)
     {
         $this->slackCode = $slackCode;
@@ -40,6 +52,11 @@ class SlackException extends \Exception
         }
     }
 
+    /**
+     * Gets the original API error code.
+     *
+     * @return string
+     */
     public function getSlackCode() : string
     {
         return $this->slackCode;
