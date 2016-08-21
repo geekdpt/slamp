@@ -22,8 +22,8 @@ class SlackException extends \Exception
 
     final public static function fromSlackCode(string $slackCode) : SlackException
     {
-        # We CamelCasify the slack code and check if there's an exception class for that.
-        # Otherwise, we'll use this class.
+        # We CamelCasify the slack code and check if there's an exception subclass for that.
+        # Otherwise, fallback to this class (when this happens, it means that Slamp is outdated).
         $neededClass = __NAMESPACE__.'\\'.implode('', array_map('ucfirst', explode('_', $slackCode))).'Exception';
         $class = class_exists($neededClass) ? $neededClass : self::class;
 
@@ -34,6 +34,7 @@ class SlackException extends \Exception
     {
         $this->slackCode = $slackCode;
 
+        # If the instance being created is not a subclass with a real message, transform the error code into a phrase.
         if(self::class == static::class) {
             $this->message = ucfirst(str_replace('_', ' ', $slackCode));
         }
