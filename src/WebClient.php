@@ -87,6 +87,16 @@ class WebClient
         });
     }
 
+    /**
+     * Entry point to Slamp's Simple Message Composing API.
+     *
+     * @return MessageComposer
+     */
+    public function compose() : MessageComposer
+    {
+        return new MessageComposer($this);
+    }
+
     /***
      * Performs a call to the Slack API using Artax.
      *
