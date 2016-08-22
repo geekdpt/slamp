@@ -170,7 +170,6 @@ class MessageComposer
         if(!$this->afterSentId) {
             throw new \LogicException('This message has not been sent yet, cannot update it!');
         }
-        var_dump($this->afterSentChannel);
 
         $futureResponse = $this->webClient->callAsync('chat.delete', [
             'channel' => $this->afterSentChannel,

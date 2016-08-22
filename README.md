@@ -10,7 +10,7 @@ An asynchronous Slack APIs client for PHP 7, powered by the [Amp asynchronous fr
 
 ----------------
 
- 1. [Installation](#installation) Installation
+ 1. [Installation](#installation)
  2. [Usage](#usage) we'll learn how to do those node-ish things
  3. Slamp APIs
     - [Web API](#web-api) call any Slack Web API methods
