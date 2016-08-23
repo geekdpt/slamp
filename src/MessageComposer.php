@@ -17,7 +17,7 @@ use Amp\{Promise, function pipe};
  *
  * @author Morgan Touverey-Quilling <mtouverey@methodinthemadness.eu>
  */
-class MessageComposer
+final class MessageComposer
 {
     /** @var WebClient */
     private $webClient;
