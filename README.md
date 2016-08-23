@@ -28,6 +28,58 @@ An asynchronous Slack APIs client for PHP 7, powered by the [Amp asynchronous fr
 
 ## Simple Message Composing
 
+This API is based on top of the Web API and intends to provide a simple interface for sending messages to channels, groups or IM channels.
+You have to create a Web API client to begin, then call `compose()` to create a new message instance.
+
+A basic usage example could be:
+
+```php
+$client = Slamp\webClient(TOKEN);
+yield $client->compose()->sendAsync('Hello there!');
+```
+
+You can also set the target channel and/or the bot name :
+
+```php
+yield $client->compose()->from('Hello Bot')->to('#general')->sendAsync('Hey, wassup #general?');
+```
+
+The `to("...")` argument supports different notations:
+ - `#channel`, `C024BE91L` for a public channel
+ - `private-group`, `G012AC86C` for a private group
+ - `@username` to post an IM message to the @slackbot inbox of the receiver (you will _not_ appear as "slackbot")
+ - `D023BB3L2` to post as the bot itself (and not slackbot like before) (you have to create such channel before)
+
+You can even edit messages or delete them after they are sent:
+
+```php
+$message = yield $client->compose()->to('@guy')->sendAsync('I hate you');
+
+# What I have done.. ?!
+yield $message->updateAsync('I love u');
+
+# I should calm down...
+yield $message->deleteAsync();
+```
+
+Here is a more complete list of the possible calls:
+
+```php
+$msg = Slamp\webClient(TOKEN)->compose()
+    ->from('Sender name')
+    ->withIcon(':robot:') # emoji code, or custom image with an URL
+    ->to('#channel')
+    ->withParsing('full') # defaults to "none", see api.slack.com/docs/message-formatting
+    ->linkingNames(true) # defaults to false, sets whether token like #general or @username are parsed and transformed into links
+    ->sendAsync('the message text');
+    
+Amp\wait($msg);
+```
+
+**Note**: attachments are not yet supported.
+
+**Warning**: Please do not rely on the type behind these methods. Just use the methods. Don't manipulate the MessageComposer direclty, as the way it is created may change radically in a future version.
+
 ## RTM API
 
 ## Error handling
