@@ -28,7 +28,7 @@ An asynchronous Slack APIs client for PHP 7, powered by the [Amp asynchronous fr
 
 ## Simple Message Composing
 
-This API is based on top of the Web API and intends to provide a simple interface for sending messages to channels, groups or IM channels.
+Inspired by [maknz/slack](https://github.com/maknz/slack), this API is based on top of the Web API and intends to provide a simple interface for sending messages to channels, groups or IM channels.
 You have to create a Web API client to begin, then call `compose()` to create a new message instance.
 
 A basic usage example could be:
