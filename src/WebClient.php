@@ -11,7 +11,10 @@
 namespace Slamp;
 
 use Amp\Artax;
-use Amp\{Promise, function pipe};
+use Amp\{
+    Promise, function pipe
+};
+use Slamp\Api\Api;
 use Slamp\Exception\SlackException;
 
 /**
@@ -34,7 +37,8 @@ class WebClient
      * WebClient constructor.
      *
      * @param string|null       $token      Slack API token. If you don't set one at construct time, you can set it up
-     *                                      later with self::setToken(), or change it on-the-fly to use another team/bot.
+     *                                      later with self::setToken(), or change it on-the-fly to use another
+     *                                      team/bot.
      * @param Artax\Client|null $httpClient An Artax client instance, auto-created if not given.
      */
     public function __construct(string $token = null, Artax\Client $httpClient = null)
@@ -69,32 +73,22 @@ class WebClient
      */
     public function callAsync(string $method, array $arguments = []) : Promise
     {
-        return pipe($this->doHttpRequestAsync($method, $arguments), function(Artax\Response $response) {
+        return pipe($this->doHttpRequestAsync($method, $arguments), function (Artax\Response $response) {
             # Slack _always_ returns JSON objects in its reponses.
             # If we can't decode a JSON object, stop immediately.
-            if(!is_array($content = json_decode($response->getBody(), true))) {
+            if (!is_array($content = json_decode($response->getBody(), true))) {
                 throw new \InvalidArgumentException('Slack returned unexpected response format - expecting JSON object/array.');
             }
 
             # Slack should always put a "ok" key in the response.
             # If that's not "ok", retrieve the error code and build a SlackException.
-            if(($content['ok'] ?? false) !== true) {
+            if (($content['ok'] ?? false) !== true) {
                 throw SlackException::fromSlackCode($content['error'] ?? 'unknown_error');
             }
 
             # Ok, everything went fine!
             return $content;
         });
-    }
-
-    /**
-     * Entry point to Slamp's Simple Message Composing API.
-     *
-     * @return MessageComposer
-     */
-    public function compose() : MessageComposer
-    {
-        return new MessageComposer($this);
     }
 
     /***
@@ -109,14 +103,14 @@ class WebClient
     {
         $arguments = $this->serializeSlackArguments($arguments);
 
-        if(!$this->token) {
+        if (!$this->token) {
             throw new \InvalidArgumentException('A token must be provided.');
         }
 
         $arguments['token'] = $this->token;
 
         $request = (new Artax\Request)
-            ->setUri(static::BASE_URL.'/'.$method)
+            ->setUri(static::BASE_URL . '/' . $method)
             ->setMethod('POST')
             ->setAllHeaders(['Content-Type' => 'application/x-www-form-urlencoded'])
             ->setBody(http_build_query($arguments));
@@ -134,20 +128,40 @@ class WebClient
      */
     private function serializeSlackArguments(array $arguments) : array
     {
-        foreach($arguments as &$value) {
-            if($value instanceof \DateTime) {
-                $value = (string) $value->getTimestamp();
-            } elseif(is_bool($value)) {
-                $value = (int) $value;
-            } elseif(is_array($value)) {
+        foreach ($arguments as &$value) {
+            if ($value instanceof \DateTime) {
+                $value = (string)$value->getTimestamp();
+            } elseif (is_bool($value)) {
+                $value = (int)$value;
+            } elseif (is_array($value)) {
                 # The json_encode below may look a bit unexpected: that's because Slack does not supports JSON payloads,
                 # but expects that arguments that are arrays to be JSON-encoded.
                 $value = json_encode($this->serializeSlackArguments($value));
-            } elseif($value instanceof \JsonSerializable) {
+            } elseif ($value instanceof \JsonSerializable) {
                 $value = $value->jsonSerialize();
             }
         }
 
         return $arguments;
+    }
+
+    /**
+     * Entry point to Slamp's Simple Message Composing API.
+     *
+     * @return MessageComposer
+     */
+    public function compose() : MessageComposer
+    {
+        return new MessageComposer($this);
+    }
+
+    /**
+     * Entry
+     *
+     * @return Api
+     */
+    public function api() : Api
+    {
+        return new Api($this);
     }
 }

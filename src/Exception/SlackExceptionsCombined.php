@@ -165,7 +165,8 @@ class AlreadyArchivedException extends SlackException
 
 
 /**
- * CantArchiveGeneralException is the sent back to your code when an API call fails and returns a cant_archive_general error.
+ * CantArchiveGeneralException is the sent back to your code when an API call fails and returns a cant_archive_general
+ * error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -198,7 +199,8 @@ class RestrictedActionException extends SlackException
 
 
 /**
- * UserIsRestrictedException is the sent back to your code when an API call fails and returns a user_is_restricted error.
+ * UserIsRestrictedException is the sent back to your code when an API call fails and returns a user_is_restricted
+ * error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -286,7 +288,8 @@ class NotInChannelException extends SlackException
 
 
 /**
- * AlreadyInChannelException is the sent back to your code when an API call fails and returns a already_in_channel error.
+ * AlreadyInChannelException is the sent back to your code when an API call fails and returns a already_in_channel
+ * error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -319,7 +322,8 @@ class CantInviteException extends SlackException
 
 
 /**
- * UserIsUltraRestrictedException is the sent back to your code when an API call fails and returns a user_is_ultra_restricted error.
+ * UserIsUltraRestrictedException is the sent back to your code when an API call fails and returns a
+ * user_is_ultra_restricted error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -341,7 +345,8 @@ class CantKickSelfException extends SlackException
 
 
 /**
- * CantKickFromGeneralException is the sent back to your code when an API call fails and returns a cant_kick_from_general error.
+ * CantKickFromGeneralException is the sent back to your code when an API call fails and returns a
+ * cant_kick_from_general error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -352,7 +357,8 @@ class CantKickFromGeneralException extends SlackException
 
 
 /**
- * CantKickFromLastChannelException is the sent back to your code when an API call fails and returns a cant_kick_from_last_channel error.
+ * CantKickFromLastChannelException is the sent back to your code when an API call fails and returns a
+ * cant_kick_from_last_channel error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -363,7 +369,8 @@ class CantKickFromLastChannelException extends SlackException
 
 
 /**
- * CantLeaveGeneralException is the sent back to your code when an API call fails and returns a cant_leave_general error.
+ * CantLeaveGeneralException is the sent back to your code when an API call fails and returns a cant_leave_general
+ * error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -440,7 +447,8 @@ class MessageNotFoundException extends SlackException
 
 
 /**
- * CantDeleteMessageException is the sent back to your code when an API call fails and returns a cant_delete_message error.
+ * CantDeleteMessageException is the sent back to your code when an API call fails and returns a cant_delete_message
+ * error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -451,7 +459,8 @@ class CantDeleteMessageException extends SlackException
 
 
 /**
- * ComplianceExportsPreventDeletionException is the sent back to your code when an API call fails and returns a compliance_exports_prevent_deletion error.
+ * ComplianceExportsPreventDeletionException is the sent back to your code when an API call fails and returns a
+ * compliance_exports_prevent_deletion error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -495,7 +504,8 @@ class RateLimitedException extends SlackException
 
 
 /**
- * TooManyAttachmentsException is the sent back to your code when an API call fails and returns a too_many_attachments error.
+ * TooManyAttachmentsException is the sent back to your code when an API call fails and returns a too_many_attachments
+ * error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -506,7 +516,8 @@ class TooManyAttachmentsException extends SlackException
 
 
 /**
- * CantUpdateMessageException is the sent back to your code when an API call fails and returns a cant_update_message error.
+ * CantUpdateMessageException is the sent back to your code when an API call fails and returns a cant_update_message
+ * error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -517,7 +528,8 @@ class CantUpdateMessageException extends SlackException
 
 
 /**
- * EditWindowClosedException is the sent back to your code when an API call fails and returns a edit_window_closed error.
+ * EditWindowClosedException is the sent back to your code when an API call fails and returns a edit_window_closed
+ * error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -671,7 +683,8 @@ class NotAllowedException extends SlackException
 
 
 /**
- * PostingToGeneralChannelDeniedException is the sent back to your code when an API call fails and returns a posting_to_general_channel_denied error.
+ * PostingToGeneralChannelDeniedException is the sent back to your code when an API call fails and returns a
+ * posting_to_general_channel_denied error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -693,7 +706,8 @@ class InvalidChannelException extends SlackException
 
 
 /**
- * GroupContainsOthersException is the sent back to your code when an API call fails and returns a group_contains_others error.
+ * GroupContainsOthersException is the sent back to your code when an API call fails and returns a
+ * group_contains_others error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -715,7 +729,8 @@ class NotInGroupException extends SlackException
 
 
 /**
- * CantLeaveLastChannelException is the sent back to your code when an API call fails and returns a cant_leave_last_channel error.
+ * CantLeaveLastChannelException is the sent back to your code when an API call fails and returns a
+ * cant_leave_last_channel error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -737,7 +752,8 @@ class LastMemberException extends SlackException
 
 
 /**
- * UserDoesNotOwnChannelException is the sent back to your code when an API call fails and returns a user_does_not_own_channel error.
+ * UserDoesNotOwnChannelException is the sent back to your code when an API call fails and returns a
+ * user_does_not_own_channel error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -770,7 +786,8 @@ class UserDisabledException extends SlackException
 
 
 /**
- * UsersListNotSuppliedException is the sent back to your code when an API call fails and returns a users_list_not_supplied error.
+ * UsersListNotSuppliedException is the sent back to your code when an API call fails and returns a
+ * users_list_not_supplied error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -858,7 +875,8 @@ class BadTimestampException extends SlackException
 
 
 /**
- * FileCommentNotFoundException is the sent back to your code when an API call fails and returns a file_comment_not_found error.
+ * FileCommentNotFoundException is the sent back to your code when an API call fails and returns a
+ * file_comment_not_found error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -946,7 +964,8 @@ class TooManyEmojiException extends SlackException
 
 
 /**
- * TooManyReactionsException is the sent back to your code when an API call fails and returns a too_many_reactions error.
+ * TooManyReactionsException is the sent back to your code when an API call fails and returns a too_many_reactions
+ * error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -990,7 +1009,8 @@ class CannotAddBotException extends SlackException
 
 
 /**
- * CannotAddSlackbotException is the sent back to your code when an API call fails and returns a cannot_add_slackbot error.
+ * CannotAddSlackbotException is the sent back to your code when an API call fails and returns a cannot_add_slackbot
+ * error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -1012,7 +1032,8 @@ class CannotAddOthersException extends SlackException
 
 
 /**
- * CannotAddOthersRecurringException is the sent back to your code when an API call fails and returns a cannot_add_others_recurring error.
+ * CannotAddOthersRecurringException is the sent back to your code when an API call fails and returns a
+ * cannot_add_others_recurring error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -1034,7 +1055,8 @@ class NotFoundException extends SlackException
 
 
 /**
- * CannotCompleteRecurringException is the sent back to your code when an API call fails and returns a cannot_complete_recurring error.
+ * CannotCompleteRecurringException is the sent back to your code when an API call fails and returns a
+ * cannot_complete_recurring error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -1045,7 +1067,8 @@ class CannotCompleteRecurringException extends SlackException
 
 
 /**
- * CannotCompleteOthersException is the sent back to your code when an API call fails and returns a cannot_complete_others error.
+ * CannotCompleteOthersException is the sent back to your code when an API call fails and returns a
+ * cannot_complete_others error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -1056,7 +1079,8 @@ class CannotCompleteOthersException extends SlackException
 
 
 /**
- * MigrationInProgressException is the sent back to your code when an API call fails and returns a migration_in_progress error.
+ * MigrationInProgressException is the sent back to your code when an API call fails and returns a
+ * migration_in_progress error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -1100,7 +1124,8 @@ class PaidOnlyException extends SlackException
 
 
 /**
- * OverPaginationLimitException is the sent back to your code when an API call fails and returns a over_pagination_limit error.
+ * OverPaginationLimitException is the sent back to your code when an API call fails and returns a
+ * over_pagination_limit error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */
@@ -1144,7 +1169,8 @@ class InvalidProfileException extends SlackException
 
 
 /**
- * ProfileSetFailedException is the sent back to your code when an API call fails and returns a profile_set_failed error.
+ * ProfileSetFailedException is the sent back to your code when an API call fails and returns a profile_set_failed
+ * error.
  *
  * @author Automatic Exceptions Generation Script <bin/update-slack-exceptions.php>
  */

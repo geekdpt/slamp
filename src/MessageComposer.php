@@ -10,7 +10,9 @@
 
 namespace Slamp;
 
-use Amp\{Promise, function pipe};
+use Amp\{
+    Promise, function pipe
+};
 
 /**
  * MessageComposer
@@ -58,10 +60,13 @@ final class MessageComposer
     /**
      * Sets the channel, private group, or IM chat room to send the message to.
      *
-     * @param string $channel - Posting to a public channel: use the channel name (#channel) or ID (eg. C024BE91L)
-     *                        - Posting to a private group : use the group name (admin-lounge) or ID (eg. G012AC86C)
-     *                        - Posting to an IM channel   : use the user name (@toverux) to post to the user's @slackbot channel,
-     *                                                       or use IM channel ID (D023BB3L2) to appear as the bot.
+     * @param string $channel                                - Posting to a public channel: use the channel name
+     *                                                       (#channel) or ID (eg. C024BE91L)
+     *                                                       - Posting to a private group : use the group name
+     *                                                       (admin-lounge) or ID (eg. G012AC86C)
+     *                                                       - Posting to an IM channel   : use the user name
+     *                                                       (@toverux) to post to the user's @slackbot channel, or use
+     *                                                       IM channel ID (D023BB3L2) to appear as the bot.
      *
      * @return MessageComposer
      */
@@ -130,7 +135,7 @@ final class MessageComposer
 
         $futureResponse = $this->webClient->callAsync('chat.postMessage', $this->payload);
 
-        return pipe($futureResponse, function(array $result) {
+        return pipe($futureResponse, function (array $result) {
             $this->afterSentId = $result['ts'];
             $this->afterSentChannel = $result['channel'];
 
@@ -147,17 +152,19 @@ final class MessageComposer
      */
     public function updateAsync(string $text) : Promise
     {
-        if(!$this->afterSentId) {
+        if (!$this->afterSentId) {
             throw new \LogicException('This message has not been sent yet, cannot update it!');
         }
 
         $futureResponse = $this->webClient->callAsync('chat.update', [
             'channel' => $this->afterSentChannel,
-            'ts' => $this->afterSentId,
-            'text' => $text
+            'ts'      => $this->afterSentId,
+            'text'    => $text,
         ]);
 
-        return pipe($futureResponse, function() { return $this; });
+        return pipe($futureResponse, function () {
+            return $this;
+        });
     }
 
     /**
@@ -167,15 +174,17 @@ final class MessageComposer
      */
     public function deleteAsync() : Promise
     {
-        if(!$this->afterSentId) {
+        if (!$this->afterSentId) {
             throw new \LogicException('This message has not been sent yet, cannot update it!');
         }
 
         $futureResponse = $this->webClient->callAsync('chat.delete', [
             'channel' => $this->afterSentChannel,
-            'ts' => $this->afterSentId
+            'ts'      => $this->afterSentId,
         ]);
 
-        return pipe($futureResponse, function() { return $this; });
+        return pipe($futureResponse, function () {
+            return $this;
+        });
     }
 }

@@ -12,7 +12,8 @@
     ],
     "autoload": {
         "psr-4": { "Slamp\\": "src/" },
-        "classmap": ["src/Exception/SlackExceptionsCombined.php"]
+        "classmap": ["src/Exception/SlackExceptionsCombined.php"],
+        "files": ["src/functions.php"]
     },
     "require": {
         "amphp/artax": "^2.0",
