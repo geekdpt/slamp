@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e58998f9ed78dee5e5e4e88973d99437",
-    "content-hash": "967d0feac858410f9ae03a5ec16071fe",
+    "hash": "3a88028a3bcce03b3c966e3df373c2a8",
+    "content-hash": "0ab59bec822d681b80acba481d35af76",
     "packages": [
         {
             "name": "amphp/amp",
@@ -353,65 +353,6 @@
             "time": "2016-07-18 22:03:24"
         },
         {
-            "name": "amphp/websocket",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/amphp/websocket.git",
-                "reference": "df07f788fb66ff2171e0c2c9275e78fcbdbf3f48"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/amphp/websocket/zipball/df07f788fb66ff2171e0c2c9275e78fcbdbf3f48",
-                "reference": "df07f788fb66ff2171e0c2c9275e78fcbdbf3f48",
-                "shasum": ""
-            },
-            "require": {
-                "amphp/amp": "^1",
-                "amphp/socket": "^0.9",
-                "php": ">=5.5"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "~1.9",
-                "phpunit/phpunit": "~4.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Amp\\Websocket\\": "lib/"
-                },
-                "classmap": [
-                    {
-                        "Amp\\Websocket": "Websocket.php"
-                    }
-                ],
-                "files": [
-                    "lib/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bob Weinand",
-                    "email": "bobwei9@hotmail.com"
-                }
-            ],
-            "description": "An async websocket client built on the amp concurrency framework",
-            "keywords": [
-                "amp",
-                "amphp",
-                "async",
-                "client",
-                "http",
-                "non-blocking",
-                "websocket"
-            ],
-            "time": "2016-01-11 20:27:12"
-        },
-        {
             "name": "daverandom/libdns",
             "version": "v1.1.0",
             "source": {
@@ -563,11 +504,9 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "dev",
-    "stability-flags": {
-        "amphp/websocket": 20
-    },
-    "prefer-stable": true,
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": []

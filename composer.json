@@ -15,11 +15,8 @@
         "classmap": ["src/Exception/SlackExceptionsCombined.php"],
         "files": ["src/functions.php"]
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "amphp/artax": "^2.0",
-        "lstrojny/functional-php": "^1.2",
-        "amphp/websocket": "dev-master"
+        "lstrojny/functional-php": "^1.2"
     }
 }
