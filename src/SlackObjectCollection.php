@@ -26,4 +26,12 @@ abstract class SlackObjectCollection extends SlackObjectAware
     {
         $this->webClient = $webClient;
     }
+
+    protected function getEmptySlackObject($id) : SlackObject
+    {
+        /** @var SlackObject $class */
+        $class = static::getApiTypeDescription()['slackObjectClass'];
+
+        return $class::createEmpty($this->webClient, $id);
+    }
 }

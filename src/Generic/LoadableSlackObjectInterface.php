@@ -8,23 +8,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Slamp\Slack;
+namespace Slamp\Generic;
 
 use Amp\Promise;
-use Slamp\{Generic, SlackObject};
 
 /**
- * Channel
+ * LoadableSlackObjectInterface
  *
  * @author Morgan Touverey-Quilling <mtouverey@methodinthemadness.eu>
  */
-class Channel extends SlackObject implements Generic\LoadableSlackObjectInterface
+interface LoadableSlackObjectInterface
 {
-    use ChannelTypeTrait;
-
-    /** {@inheritdoc} */
-    public function loadAsync() : Promise
-    {
-        return $this->callMethodWithObjectResult($this, 'info');
-    }
+    public function loadAsync() : Promise;
 }

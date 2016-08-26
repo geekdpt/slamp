@@ -22,6 +22,9 @@ abstract class SlackObjectAware
     /** @var WebClient */
     protected $webClient;
 
+    /** @var array Cache for ::apiconf() */
+    private $apiTypeDescription;
+
     /**
      * Gets the configuration for this Slack API/SlackObjects-aware Slamp component.
      *
@@ -35,37 +38,65 @@ abstract class SlackObjectAware
      */
     abstract protected static function getApiTypeDescription() : array;
 
+    /**
+     * Calls a method, returns void by default.
+     *
+     * @param string|SlackObject|null $subject     The slackobject to pass in argument, or null
+     * @param string                  $method      The method name, without the type prefix (channels.list => list)
+     * @param array                   $arguments   Normal method arguments
+     * @param \Closure|null           $transformer Transformer to apply on the response
+     *
+     * @return Promise
+     */
     protected function callMethodAsync($subject, string $method, array $arguments = [], \Closure $transformer = null) : Promise
     {
-        $type = static::getApiTypeDescription();
-
         if($subject) {
-            $arguments[$type['methodItemName']] = $subject;
+            $arguments[$this->apiconf('methodItemName')] = $subject;
         }
 
         return pipe(
-            $this->webClient->callAsync($type['endpointPrefix'].'.'.$method, $arguments),
+            $this->webClient->callAsync($this->apiconf('endpointPrefix').'.'.$method, $arguments),
             $transformer ?: function() { return; }
         );
     }
 
+    /**
+     * Calls a method, retrieves the SlackObject in the response and returns it.
+     *
+     * @param string|SlackObject|null $subject     The slackobject to pass in argument, or null
+     * @param string                  $method      The method name, without the type prefix (channels.list => list)
+     * @param array                   $arguments   Normal method arguments
+     * @param \Closure|null           $transformer Transformer to apply on the response
+     *
+     * @return Promise
+     */
     protected function callMethodWithObjectResult($subject, string $method, array $arguments = [], \Closure $transformer = null) : Promise
     {
         return pipe(
             $this->callMethodAsync($subject, $method, $arguments, $transformer ?: function($data) { return $data; }),
             function(array $response) {
-                $data = $response[static::getApiTypeDescription()['methodItemName']];
+                $data = $response[$this->apiconf('methodItemName')];
                 return $this->hydrateSlackObject($data);
             }
         );
     }
 
+    /**
+     * Calls a method, retrieves the collection of SlackObjects in the response and returns it.
+     *
+     * @param string|SlackObject|null $subject     The slackobject to pass in argument, or null
+     * @param string                  $method      The method name, without the type prefix (channels.list => list)
+     * @param array                   $arguments   Normal method arguments
+     * @param \Closure|null           $transformer Transformer to apply on the response
+     *
+     * @return Promise
+     */
     protected function callMethodWithCollectionResult($subject, string $method, array $arguments = [], \Closure $transformer = null) : Promise
     {
         return pipe(
             $this->callMethodAsync($subject, $method, $arguments, $transformer ?: function($data) { return $data; }),
             function(array $response) {
-                $rawSlackObjects = $response[static::getApiTypeDescription()['methodCollectionName']];
+                $rawSlackObjects = $response[$this->apiconf('methodCollectionName')];
 
                 $slackObjects = [];
                 foreach($rawSlackObjects as $rawSlackObject) {
@@ -77,11 +108,33 @@ abstract class SlackObjectAware
         );
     }
 
+    /**
+     * Hydrates a SlackObject from an array.
+     *
+     * @param array $data SlackObject contents
+     *
+     * @return SlackObject
+     */
     protected function hydrateSlackObject(array $data) : SlackObject
     {
         /** @var SlackObject $class */
-        $class = static::getApiTypeDescription()['slackObjectClass'];
+        $class = $this->apiconf('slackObjectClass');
 
-        return $class::create($this->webClient, $data);
+        return $class::createHydrated($this->webClient, $data);
+    }
+
+    /**
+     * Gets a value by key from the API type's configuration (defined by static::getApiTypeDescription()).
+     *
+     * @param string $property
+     *
+     * @return string
+     */
+    private function apiconf(string $property) : string
+    {
+        return (
+            $this->apiTypeDescription ?:
+            ($this->apiTypeDescription = static::getApiTypeDescription())
+        )[$property];
     }
 }

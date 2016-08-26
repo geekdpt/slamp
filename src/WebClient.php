@@ -145,6 +145,8 @@ class WebClient
                 $value = (string) $value->getTimestamp();
             } elseif(is_bool($value)) {
                 $value = (int) $value;
+            } elseif($value instanceof SlackObject) {
+                $value = $value->getId();
             } elseif(is_array($value)) {
                 # The json_encode below may look a bit unexpected: that's because Slack does not supports JSON payloads,
                 # but expects that arguments that are arrays to be JSON-encoded.

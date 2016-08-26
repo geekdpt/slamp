@@ -21,24 +21,54 @@ namespace Slamp;
  */
 abstract class SlackObject extends SlackObjectAware  implements \ArrayAccess, \JsonSerializable
 {
+    protected $isHydrated = false;
+
     /** @var array */
     protected $data;
+
+    /**
+     * Factory for instantiating empty SlackObject (useful for just calling related methods).
+     *
+     * @param WebClient $webClient An instance of the web client
+     * @param mixed     $id        The SlackObject's identifier
+     *
+     * @return SlackObject
+     */
+    public static function createEmpty(WebClient $webClient, $id) : SlackObject
+    {
+        $object = new static;
+        $object->webClient = $webClient;
+        $object->data['id'] = $id;
+
+        return $object;
+    }
 
     /**
      * Factory for instantiating SlackObjects from an associative array representing the object.
      *
      * @param WebClient $webClient An instance of the web client
-     * @param array     $data      The object's contents
+     * @param array     $data      The SlackObject's contents
      *
      * @return SlackObject
      */
-    public static function create(WebClient $webClient, array $data) : SlackObject
+    public static function createHydrated(WebClient $webClient, array $data) : SlackObject
     {
         $object = new static;
         $object->webClient = $webClient;
         $object->data = $data;
+        $object->isHydrated = true;
 
         return $object;
+    }
+
+    /**
+     * Gets Slackobject's unique identifier.
+     *
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->data['id'];
     }
 
     /**
@@ -62,8 +92,10 @@ abstract class SlackObject extends SlackObjectAware  implements \ArrayAccess, \J
      */
     public function offsetGet($offset)
     {
-        if(!isset($this->data[$offset])) {
-            throw new \DomainException("Unknown property ${offset}.");
+        if(!$this->isHydrated) {
+            throw new \LogicException("This SlackObject has not been hydrated, cannot get property {$offset}");
+        } elseif(!isset($this->data[$offset])) {
+            throw new \DomainException("Unknown property {$offset}.");
         }
 
         return $this->data[$offset];
