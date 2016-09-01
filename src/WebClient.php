@@ -13,7 +13,7 @@ namespace Slamp;
 use Amp\Artax;
 use Amp\{Promise, function pipe};
 use Slamp\Exception\SlackException;
-use Slamp\Slack\ChannelMethods;
+use Slamp\Slack\ChannelsMethods;
 
 /**
  * The WebClient is the base entry point of a Slack Web API client.
@@ -31,7 +31,7 @@ class WebClient
     /** @var string */
     protected $token;
 
-    /** @var ChannelMethods */
+    /** @var ChannelsMethods */
     public $channels;
 
     /**
@@ -46,7 +46,7 @@ class WebClient
         $this->httpClient = $httpClient ?: new Artax\Client;
         $this->token = $token;
 
-        $this->channels = new ChannelMethods($this);
+        $this->channels = new ChannelsMethods($this);
     }
 
     /**
