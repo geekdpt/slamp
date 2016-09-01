@@ -2,7 +2,9 @@
 
 # slamp
 
-An asynchronous Slack APIs client for PHP 7, powered by the [Amp asynchronous framework](https://github.com/amphp). Forget those cURL wrappers and go async!
+An asynchronous Slack [RTM](https://api.slack.com/rtm) & [Web](https://api.slack.com/web) APIs client for PHP 7, powered by the [Amp asynchronous framework](https://github.com/amphp), providing a typed experience and full-featured interfaces.
+
+Forget those cURL wrappers and go async!
 
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/d878db5a-ec42-4a12-995e-07422ffefa28.svg?style=flat-square&label=insight)](https://insight.sensiolabs.com/projects/e9103654-845f-40b7-8eeb-009e49e09067)
 [![Packagist (Composer)](https://img.shields.io/packagist/v/geekdpt/slamp.svg?style=flat-square)](https://packagist.org/packages/geekdpt/slamp)
