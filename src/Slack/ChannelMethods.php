@@ -11,20 +11,24 @@
 namespace Slamp\Slack;
 
 use Amp\{Promise, function pipe};
-use Slamp\SlackObjectCollection;
+use Slamp\SlackObjectMethods;
 
 /**
- * ChannelsCollection
+ * ChannelMethods
  *
  * @author Morgan Touverey-Quilling <mtouverey@methodinthemadness.eu>
  */
-class ChannelCollection extends SlackObjectCollection
+class ChannelMethods extends SlackObjectMethods
 {
-    use ChannelTypeTrait;
-
-    public function get($id) : Channel
+    /** {@inheritdoc} */
+    protected static function configureApiType() : array
     {
-        return $this->getEmptySlackObject($id);
+        return [
+            'slackObjectClass' => Channel::class,
+            'endpointPrefix' => 'channels',
+            'methodItemName' => 'channel',
+            'methodCollectionName' => 'channels'
+        ];
     }
 
     /**

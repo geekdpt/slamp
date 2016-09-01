@@ -19,44 +19,27 @@ namespace Slamp;
  *
  * @author Morgan Touverey-Quilling <mtouverey@methodinthemadness.eu>
  */
-abstract class SlackObject extends SlackObjectAware  implements \ArrayAccess, \JsonSerializable
+abstract class SlackObject implements \ArrayAccess, \JsonSerializable
 {
-    protected $isHydrated = false;
+    /** @var WebClient */
+    protected $webClient;
 
     /** @var array */
     protected $data;
 
     /**
-     * Factory for instantiating empty SlackObject (useful for just calling related methods).
-     *
-     * @param WebClient $webClient An instance of the web client
-     * @param mixed     $id        The SlackObject's identifier
-     *
-     * @return SlackObject
-     */
-    public static function createEmpty(WebClient $webClient, $id) : SlackObject
-    {
-        $object = new static;
-        $object->webClient = $webClient;
-        $object->data['id'] = $id;
-
-        return $object;
-    }
-
-    /**
-     * Factory for instantiating SlackObjects from an associative array representing the object.
+     * Factory for instantiating a SlackObject from an associative array representing it.
      *
      * @param WebClient $webClient An instance of the web client
      * @param array     $data      The SlackObject's contents
      *
      * @return SlackObject
      */
-    public static function createHydrated(WebClient $webClient, array $data) : SlackObject
+    public static function create(WebClient $webClient, array $data) : SlackObject
     {
         $object = new static;
         $object->webClient = $webClient;
         $object->data = $data;
-        $object->isHydrated = true;
 
         return $object;
     }
@@ -92,9 +75,7 @@ abstract class SlackObject extends SlackObjectAware  implements \ArrayAccess, \J
      */
     public function offsetGet($offset)
     {
-        if(!$this->isHydrated) {
-            throw new \LogicException("This SlackObject has not been hydrated, cannot get property {$offset}");
-        } elseif(!isset($this->data[$offset])) {
+        if(!isset($this->data[$offset])) {
             throw new \DomainException("Unknown property {$offset}.");
         }
 
@@ -106,20 +87,24 @@ abstract class SlackObject extends SlackObjectAware  implements \ArrayAccess, \J
      *
      * @param mixed $offset
      * @param mixed $value
+     *
+     * @throws \LogicException if accessed
      */
     public function offsetSet($offset, $value)
     {
-        throw new \LogicException('SlackObjects are read-only.');
+        throw self::getReadOnlyException();
     }
 
     /**
      * This method must not be used as SlackObjects are read-only.
      *
      * @param mixed $offset
+     *
+     * @throws \LogicException if accessed
      */
     public function offsetUnset($offset)
     {
-        throw new \LogicException('SlackObjects are read-only.');
+        throw self::getReadOnlyException();
     }
 
     /**
@@ -130,5 +115,13 @@ abstract class SlackObject extends SlackObjectAware  implements \ArrayAccess, \J
     public function jsonSerialize()
     {
         return $this->data;
+    }
+
+    /**
+     * @return \LogicException
+     */
+    private static function getReadOnlyException() : \LogicException
+    {
+        return new \LogicException('SlackObjects are read-only.');
     }
 }

@@ -10,21 +10,14 @@
 
 namespace Slamp\Slack;
 
-use Amp\Promise;
-use Slamp\{Generic, SlackObject};
+use Slamp\SlackObject;
 
 /**
  * Channel
  *
  * @author Morgan Touverey-Quilling <mtouverey@methodinthemadness.eu>
  */
-class Channel extends SlackObject implements Generic\LoadableSlackObjectInterface
+class Channel extends SlackObject
 {
-    use ChannelTypeTrait;
 
-    /** {@inheritdoc} */
-    public function loadAsync() : Promise
-    {
-        return $this->callMethodWithObjectResult($this, 'info');
-    }
 }

@@ -13,30 +13,62 @@ namespace Slamp;
 use Amp\{Promise, function pipe};
 
 /**
- * SlackObjectAware
+ * SlackObjectMethods
  *
  * @author Morgan Touverey-Quilling <mtouverey@methodinthemadness.eu>
  */
-abstract class SlackObjectAware
+abstract class SlackObjectMethods
 {
+    /** @var \Closure */
+    private static $nopTransformer;
+
+    /** @var \Closure */
+    private static $voidTransformer;
+
     /** @var WebClient */
     protected $webClient;
 
-    /** @var array Cache for ::apiconf() */
-    private $apiTypeDescription;
+    /** @var string Supported SlackObject FQDN */
+    protected $slackObjectClass;
+
+    /** @var string Methods prefix (eg. "channels") */
+    protected $endpointPrefix;
+
+    /** @var string */
+    protected $methodItemName;
+
+    /** @var string */
+    protected $methodCollectionName;
 
     /**
-     * Gets the configuration for this Slack API/SlackObjects-aware Slamp component.
+     * SlackObjectMethods constructor.
      *
-     * Returns an array with the following keys/values:
-     *  - slackObjectClass: (string) supported SlackObject class FQDN ;
-     *  - endpointPrefix: (string) prefix of the main endpoint for this class ;
-     *  - methodItemName: (string) name used in api method arguments and api method responses ;
-     *  - methodCollectionName: (string) name used in api method responses
-     *
-     * @return array
+     * @param WebClient $webClient
      */
-    abstract protected static function getApiTypeDescription() : array;
+    public function __construct(WebClient $webClient)
+    {
+        $this->webClient = $webClient;
+
+        #=> Initialize some static members
+        self::$nopTransformer || self::$nopTransformer = function($input) { return $input; };
+        self::$voidTransformer || self::$voidTransformer = function($input) { };
+
+        #=> Configure the SlackObjectMethods instance for a specific API type (channels, users...)
+        $configuration = static::configureApiType();
+
+        foreach(['slackObjectClass', 'endpointPrefix', 'methodItemName', 'methodCollectionName'] as $requiredProp) {
+            if(!array_key_exists($requiredProp, $configuration)) {
+                throw new \LogicException("Missing {$requiredProp} configuration property");
+            } else {
+                $this->$requiredProp = $configuration[$requiredProp];
+            }
+        }
+    }
+
+    /**
+     * @return array An associative array with values for slackObjectClass, apiPrefix, apiName, apiNamePlural.
+     */
+    protected abstract static function configureApiType() : array;
 
     /**
      * Calls a method, returns void by default.
@@ -51,12 +83,12 @@ abstract class SlackObjectAware
     protected function callMethodAsync($subject, string $method, array $arguments = [], \Closure $transformer = null) : Promise
     {
         if($subject) {
-            $arguments[$this->apiconf('methodItemName')] = $subject;
+            $arguments[$this->methodItemName] = $subject;
         }
 
         return pipe(
-            $this->webClient->callAsync($this->apiconf('endpointPrefix').'.'.$method, $arguments),
-            $transformer ?: function() { return; }
+            $this->webClient->callAsync($this->endpointPrefix.'.'.$method, $arguments),
+            $transformer ?: self::$voidTransformer
         );
     }
 
@@ -72,13 +104,11 @@ abstract class SlackObjectAware
      */
     protected function callMethodWithObjectResult($subject, string $method, array $arguments = [], \Closure $transformer = null) : Promise
     {
-        return pipe(
-            $this->callMethodAsync($subject, $method, $arguments, $transformer ?: function($data) { return $data; }),
-            function(array $response) {
-                $data = $response[$this->apiconf('methodItemName')];
-                return $this->hydrateSlackObject($data);
-            }
-        );
+        return $this->callMethodAsync($subject, $method, $arguments, $transformer ?: function(array $response) {
+            $data = $response[$this->methodItemName];
+
+            return $this->hydrateSlackObject($data);
+        });
     }
 
     /**
@@ -93,19 +123,16 @@ abstract class SlackObjectAware
      */
     protected function callMethodWithCollectionResult($subject, string $method, array $arguments = [], \Closure $transformer = null) : Promise
     {
-        return pipe(
-            $this->callMethodAsync($subject, $method, $arguments, $transformer ?: function($data) { return $data; }),
-            function(array $response) {
-                $rawSlackObjects = $response[$this->apiconf('methodCollectionName')];
+        return $this->callMethodAsync($subject, $method, $arguments, $transformer ?: function(array $response) {
+            $rawSlackObjects = $response[$this->methodCollectionName];
 
-                $slackObjects = [];
-                foreach($rawSlackObjects as $rawSlackObject) {
-                    $slackObjects[] = $this->hydrateSlackObject($rawSlackObject);
-                }
-
-                return $slackObjects;
+            $slackObjects = [];
+            foreach($rawSlackObjects as $rawSlackObject) {
+                $slackObjects[] = $this->hydrateSlackObject($rawSlackObject);
             }
-        );
+
+            return $slackObjects;
+        });
     }
 
     /**
@@ -118,23 +145,8 @@ abstract class SlackObjectAware
     protected function hydrateSlackObject(array $data) : SlackObject
     {
         /** @var SlackObject $class */
-        $class = $this->apiconf('slackObjectClass');
+        $class = $this->slackObjectClass;
 
-        return $class::createHydrated($this->webClient, $data);
-    }
-
-    /**
-     * Gets a value by key from the API type's configuration (defined by static::getApiTypeDescription()).
-     *
-     * @param string $property
-     *
-     * @return string
-     */
-    private function apiconf(string $property) : string
-    {
-        return (
-            $this->apiTypeDescription ?:
-            ($this->apiTypeDescription = static::getApiTypeDescription())
-        )[$property];
+        return $class::create($this->webClient, $data);
     }
 }
