@@ -20,10 +20,10 @@ use Amp\{Promise, function pipe};
 abstract class SlackObjectMethods
 {
     /** @var \Closure */
-    private static $nopTransformer;
+    protected static $nopTransformer;
 
     /** @var \Closure */
-    private static $voidTransformer;
+    protected static $voidTransformer;
 
     /** @var WebClient */
     protected $webClient;
