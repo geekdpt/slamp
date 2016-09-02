@@ -134,7 +134,7 @@ class Channel extends SlackObject
     }
 
     /**
-     * @see ChannelMethods::archiveAsync()
+     * @see ChannelsMethods::archiveAsync()
      *
      * @return Promise
      */
@@ -144,7 +144,7 @@ class Channel extends SlackObject
     }
 
     /**
-     * @see ChannelMethods::unarchiveAsync()
+     * @see ChannelsMethods::unarchiveAsync()
      *
      * @return Promise
      */
@@ -154,7 +154,7 @@ class Channel extends SlackObject
     }
 
     /**
-     * @see ChannelMethods::inviteAsync()
+     * @see ChannelsMethods::inviteAsync()
      *
      * @param string|User $user
      *
@@ -166,7 +166,7 @@ class Channel extends SlackObject
     }
 
     /**
-     * @see ChannelMethods::joinAsync()
+     * @see ChannelsMethods::joinAsync()
      *
      * @return Promise
      */
@@ -176,7 +176,7 @@ class Channel extends SlackObject
     }
 
     /**
-     * @see ChannelMethods::leaveAsync()
+     * @see ChannelsMethods::leaveAsync()
      *
      * @return Promise
      */
@@ -186,7 +186,7 @@ class Channel extends SlackObject
     }
 
     /**
-     * @see ChannelMethods::kickAsync()
+     * @see ChannelsMethods::kickAsync()
      *
      * @param string|User $user
      *
@@ -198,7 +198,7 @@ class Channel extends SlackObject
     }
 
     /**
-     * @see ChannelMethods::renameAsync()
+     * @see ChannelsMethods::renameAsync()
      *
      * @param string $name
      *
@@ -210,7 +210,7 @@ class Channel extends SlackObject
     }
 
     /**
-     * @see ChannelMethods::setPurposeAsync()
+     * @see ChannelsMethods::setPurposeAsync()
      *
      * @param string $purpose
      *
@@ -222,7 +222,7 @@ class Channel extends SlackObject
     }
 
     /**
-     * @see ChannelMethods::setTopicAsync()
+     * @see ChannelsMethods::setTopicAsync()
      *
      * @param string $topic
      *
