@@ -118,6 +118,17 @@ abstract class SlackObject implements \ArrayAccess, \JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function __toString() : string
+    {
+        $class = static::class;
+        $json = json_encode($this, JSON_PRETTY_PRINT);
+
+        return "SlackObject({$class}) {$json}";
+    }
+
+    /**
      * @return \LogicException
      */
     private static function getReadOnlyException() : \LogicException
