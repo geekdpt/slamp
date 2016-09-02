@@ -14,6 +14,7 @@ use Amp\Artax;
 use Amp\{Promise, function pipe};
 use Slamp\Exception\SlackException;
 use Slamp\Slack\ChannelsMethods;
+use Slamp\Slack\UsersMethods;
 
 /**
  * The WebClient is the base entry point of a Slack Web API client.
@@ -34,6 +35,9 @@ class WebClient
     /** @var ChannelsMethods */
     public $channels;
 
+    /** @var UsersMethods */
+    public $users;
+
     /**
      * WebClient constructor.
      *
@@ -47,6 +51,7 @@ class WebClient
         $this->token = $token;
 
         $this->channels = new ChannelsMethods($this);
+        $this->users = new UsersMethods($this);
     }
 
     /**
