@@ -134,6 +134,16 @@ class Channel extends SlackObject
     }
 
     /**
+     * Gets the user that created the channel.
+     *
+     * @return Promise<User>
+     */
+    public function getCreatorAsync() : Promise
+    {
+        return $this->webClient->users->infoAsync($this['creator']);
+    }
+
+    /**
      * @see ChannelsMethods::archiveAsync()
      *
      * @return Promise
