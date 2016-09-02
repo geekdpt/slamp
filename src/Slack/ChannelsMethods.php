@@ -10,7 +10,7 @@
 
 namespace Slamp\Slack;
 
-use Amp\{Promise};
+use Amp\Promise;
 use Slamp\SlackObjectMethods;
 
 /**
