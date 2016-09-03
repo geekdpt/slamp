@@ -38,6 +38,9 @@ class WebClient
     /** @var UsersMethods */
     public $users;
 
+    /** @var FilesMethods */
+    public $files;
+
     /**
      * WebClient constructor.
      *
@@ -52,6 +55,7 @@ class WebClient
 
         $this->channels = new ChannelsMethods($this);
         $this->users = new UsersMethods($this);
+        $this->files = new FilesMethods($this);
     }
 
     /**
