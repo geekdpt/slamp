@@ -35,6 +35,9 @@ abstract class SlackObjectMethods
     protected $endpointPrefix;
 
     /** @var string */
+    protected $methodIdArgumentName;
+
+    /** @var string */
     protected $methodItemName;
 
     /** @var string */
@@ -63,6 +66,8 @@ abstract class SlackObjectMethods
                 $this->$requiredProp = $configuration[$requiredProp];
             }
         }
+
+        $this->methodIdArgumentName = $configuration['methodIdArgumentName'] ?? $this->methodItemName;
     }
 
     /**
@@ -83,7 +88,7 @@ abstract class SlackObjectMethods
     protected function callMethodAsync($subject, string $method, array $arguments = [], \Closure $transformer = null) : Promise
     {
         if($subject) {
-            $arguments[$this->methodItemName] = $subject;
+            $arguments[$this->methodIdArgumentName] = $subject;
         }
 
         return pipe(

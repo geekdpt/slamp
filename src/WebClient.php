@@ -14,6 +14,7 @@ use Amp\Artax;
 use Amp\{Promise, function pipe};
 use Slamp\Exception\SlackException;
 use Slamp\Slack\ChannelsMethods;
+use Slamp\Slack\GroupsMethods;
 use Slamp\Slack\UsersMethods;
 
 /**
@@ -35,6 +36,9 @@ class WebClient
     /** @var ChannelsMethods */
     public $channels;
 
+    /** @var GroupsMethods */
+    public $groups;
+
     /** @var UsersMethods */
     public $users;
 
@@ -51,6 +55,7 @@ class WebClient
         $this->token = $token;
 
         $this->channels = new ChannelsMethods($this);
+        $this->groups = new GroupsMethods($this);
         $this->users = new UsersMethods($this);
     }
 
