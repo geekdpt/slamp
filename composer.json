@@ -8,6 +8,10 @@
         {
             "name": "Morgan Touverey Quilling",
             "email": "mtouverey@methodinthemadness.eu"
+        },
+        {
+            "name": "Jerome Schaeffer",
+            "email": "jer.schaeffer@gmail.com"
         }
     ],
     "autoload": {

@@ -12,17 +12,35 @@ namespace Slamp\Slack;
 
 use Amp\{Promise, function pipe};
 use Slamp\SlackObjectMethods;
+use Slamp\WebClient;
 
 /**
  * Users-related methods.
  * The methods of this class reflect Slack's API and are listed alphabetically.
  *
  * @author Morgan Touverey-Quilling <mtouverey@methodinthemadness.eu>
+ * @author Jerome Schaeffer <jer.schaeffer@gmail.com>
  *
  * @TODO Implement users.identity method
  */
 class UsersMethods extends SlackObjectMethods
 {
+    /** @var AdminMethods */
+    public $admin;
+
+    /**
+     * Used to add sub-methods to the user methods.
+     *
+     * @param WebClient $webClient
+     */
+    public function __construct(WebClient $webClient)
+    {
+        parent::__construct($webClient);
+
+        $this->admin = new AdminMethods($webClient);
+    }
+
+
     /** {@inheritdoc} */
     protected static function configureApiType() : array
     {
